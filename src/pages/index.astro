@@ -1,18 +1,232 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import { photos } from "../data/photos.js";
 
+const heroPhotos = photos.filter(p => p.hero);
+const categories = ["landscapes", "travel", "portraits"];
+const totalDuration = heroPhotos.length * 5;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-		<h1> My Astro home page <h1>
-	</body>
-</html>
+<BaseLayout title="Home" active="home">
+  <div class="homepage">
+
+    <section class="hero">
+      {heroPhotos.map((photo, i) => (
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          class="hero-slide"
+          loading={i === 0 ? "eager" : "lazy"}
+          style={`
+            animation-delay: ${i * 5}s;
+            animation-duration: ${totalDuration}s;
+          `}
+        />
+      ))}
+      <div class="hero-overlay"></div>
+      <Nav active="home" />
+      <div class="hero-bottom">
+        <p class="location" id="location-label">{heroPhotos[0].location}</p>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <div class="categories">
+      {categories.map((cat, i) => (
+        <a href={`/gallery/${cat}`} class="cat-card">
+          <span class="num">0{i + 1}</span>
+          <span class="cat-name">{cat}</span>
+          <span class="count">
+            {photos.filter(p => p.category === cat).length} photos
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <footer>
+      <span>© {new Date().getFullYear()} Your Name</span>
+      
+        href="https://instagram.com/yourhandle"
+        target="_blank"
+        rel="noopener"
+      >
+        @yourhandle
+      </a>
+    </footer>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── page reset ── */
+  .homepage {
+    background: #111;
+    min-height: 100vh;
+    color: white;
+  }
+
+  /* ── hero ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: crossfade linear infinite;
+  }
+
+  /* first slide visible immediately on load */
+  .hero-slide:first-child {
+    opacity: 1;
+  }
+
+  @keyframes crossfade {
+    0%   { opacity: 0; }
+    4%   { opacity: 1; }
+    28%  { opacity: 1; }
+    33%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.22);
+    z-index: 1;
+  }
+
+  /* nav sits above overlay — handled inside Nav.astro with z-index: 10 */
+
+  .hero-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 28px 24px;
+    z-index: 2;
+  }
+
+  .location {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    margin: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.25);
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* ── category strip ── */
+  .categories {
+    display: flex;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .cat-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 22px 24px;
+    text-decoration: none;
+    border-right: 0.5px solid rgba(255, 255, 255, 0.07);
+    transition: background 0.2s;
+  }
+
+  .cat-card:last-child {
+    border-right: none;
+  }
+
+  .cat-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .num {
+    color: rgba(255, 255, 255, 0.22);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .cat-name {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+
+  .count {
+    color: rgba(255, 255, 255, 0.22);
+    font-size: 11px;
+  }
+
+  /* ── footer ── */
+  footer {
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  footer a {
+    color: rgba(255, 255, 255, 0.25);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* ── reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide { animation: none; opacity: 0; }
+    .hero-slide:first-child { opacity: 1; }
+  }
+</style>
+
+<script>
+  // Update location label to match the currently visible slide
+  const slides = document.querySelectorAll(".hero-slide");
+  const label = document.getElementById("location-label");
+
+  const locations = [
+    ...document.querySelectorAll(".hero-slide")
+  ].map(img => img.alt); // fallback — ideally pass locations via data attributes
+
+  // swap label text each time a new slide becomes active
+  let current = 0;
+  const interval = 5000; // must match animation keyframe timing (5s per slide)
+
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    if (label) {
+      label.style.opacity = "0";
+      setTimeout(() => {
+        label.textContent = slides[current].dataset.location;
+        label.style.opacity = "1";
+      }, 400);
+    }
+  }, interval);
+</script>
