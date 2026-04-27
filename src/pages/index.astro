@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Nav from "../components/Nav.astro";
 import { photos } from "../data/photos.js";
 
 const heroPhotos = photos.filter(p => p.hero);
@@ -17,6 +16,7 @@ const totalDuration = heroPhotos.length * 5;
           src={photo.src}
           alt={photo.alt}
           class="hero-slide"
+          data-location={photo.location}
           loading={i === 0 ? "eager" : "lazy"}
           style={`
             animation-delay: ${i * 5}s;
@@ -25,7 +25,6 @@ const totalDuration = heroPhotos.length * 5;
         />
       ))}
       <div class="hero-overlay"></div>
-      <Nav active="home" />
       <div class="hero-bottom">
         <p class="location" id="location-label">{heroPhotos[0].location}</p>
         <div class="scroll-line"></div>
@@ -59,14 +58,12 @@ const totalDuration = heroPhotos.length * 5;
 </BaseLayout>
 
 <style>
-  /* ── page reset ── */
   .homepage {
     background: #111;
     min-height: 100vh;
     color: white;
   }
 
-  /* ── hero ── */
   .hero {
     position: relative;
     height: 100vh;
@@ -83,7 +80,6 @@ const totalDuration = heroPhotos.length * 5;
     animation: crossfade linear infinite;
   }
 
-  /* first slide visible immediately on load */
   .hero-slide:first-child {
     opacity: 1;
   }
@@ -103,15 +99,12 @@ const totalDuration = heroPhotos.length * 5;
     z-index: 1;
   }
 
-  /* nav sits above overlay — handled inside Nav.astro with z-index: 10 */
-
   .hero-bottom {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
     padding: 0 28px 24px;
     z-index: 2;
@@ -135,7 +128,6 @@ const totalDuration = heroPhotos.length * 5;
     transform: translateX(-50%);
   }
 
-  /* ── category strip ── */
   .categories {
     display: flex;
     border-top: 0.5px solid rgba(255, 255, 255, 0.08);
@@ -152,13 +144,8 @@ const totalDuration = heroPhotos.length * 5;
     transition: background 0.2s;
   }
 
-  .cat-card:last-child {
-    border-right: none;
-  }
-
-  .cat-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-  }
+  .cat-card:last-child { border-right: none; }
+  .cat-card:hover { background: rgba(255, 255, 255, 0.04); }
 
   .num {
     color: rgba(255, 255, 255, 0.22);
@@ -178,7 +165,6 @@ const totalDuration = heroPhotos.length * 5;
     font-size: 11px;
   }
 
-  /* ── footer ── */
   footer {
     padding: 14px 28px;
     display: flex;
@@ -195,11 +181,8 @@ const totalDuration = heroPhotos.length * 5;
     transition: color 0.2s;
   }
 
-  footer a:hover {
-    color: rgba(255, 255, 255, 0.6);
-  }
+  footer a:hover { color: rgba(255, 255, 255, 0.6); }
 
-  /* ── reduced motion ── */
   @media (prefers-reduced-motion: reduce) {
     .hero-slide { animation: none; opacity: 0; }
     .hero-slide:first-child { opacity: 1; }
@@ -207,26 +190,19 @@ const totalDuration = heroPhotos.length * 5;
 </style>
 
 <script>
-  // Update location label to match the currently visible slide
-  const slides = document.querySelectorAll(".hero-slide");
+  const slides = document.querySelectorAll<HTMLImageElement>(".hero-slide");
   const label = document.getElementById("location-label");
-
-  const locations = [
-    ...document.querySelectorAll(".hero-slide")
-  ].map(img => img.alt); // fallback — ideally pass locations via data attributes
-
-  // swap label text each time a new slide becomes active
   let current = 0;
-  const interval = 5000; // must match animation keyframe timing (5s per slide)
 
   setInterval(() => {
     current = (current + 1) % slides.length;
     if (label) {
       label.style.opacity = "0";
       setTimeout(() => {
-        label.textContent = slides[current].dataset.location;
+        label.textContent = slides[current].dataset.location ?? "";
         label.style.opacity = "1";
       }, 400);
     }
-  }, interval);
+  }, 5000);
+</script>
 </script>

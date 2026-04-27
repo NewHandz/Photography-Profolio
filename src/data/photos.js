@@ -2,8 +2,8 @@ export const photos = [
   // ── landscapes ──
   {
     src: "/photos/landscapes/stars.jpg",
-    alt: "Alps at golden hour",
-    location: "Chamonix, France",
+    alt: "Stars",
+    location: "Yunnan, China",
     category: "landscapes",
     hero: true,
   },
@@ -11,8 +11,8 @@ export const photos = [
   // ── travel ──
   {
     src: "/photos/travel/boguang.jpg",
-    alt: "Rainy night in Shinjuku",
-    location: "Tokyo, Japan",
+    alt: "Water",
+    location: "Mayami, US",
     category: "travel",
     hero: true,
   },
@@ -20,8 +20,8 @@ export const photos = [
   // ── portraits ──
   {
     src: "/photos/portraits/lzt.jpg",
-    alt: "Portrait by window light",
-    location: "New York, USA",
+    alt: "Portrait with LZT",
+    location: "Yunnan, China",
     category: "portraits",
     hero: true,
   },
