@@ -1,7 +1,7 @@
 export const photos = [
   // ── landscapes ──
   {
-    src: "/photos/landscapes/stars.JPG",
+    src: "/photos/landscape/stars.JPG",
     alt: "Stars",
     location: "Yunnan, China",
     category: "landscapes",
@@ -19,7 +19,7 @@ export const photos = [
 
   // ── portraits ──
   {
-    src: "/photos/portraits/lzt.jpg",
+    src: "/photos/portrait/lzt.jpg",
     alt: "Portrait with LZT",
     location: "Yunnan, China",
     category: "portraits",
