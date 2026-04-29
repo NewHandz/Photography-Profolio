@@ -1,0 +1,85 @@
+---
+const { active } = Astro.props;
+---
+
+<nav>
+  <a href="/" class:list={["nav-link", { active: active === "home" }]}>Home</a>
+  <a href="/about" class:list={["nav-link", { active: active === "about" }]}>About</a>
+  <a href="/contact" class:list={["nav-link", { active: active === "contact" }]}>Contact</a>
+</nav>
+
+<style>
+  nav {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    display: flex;
+    gap: 48px;
+    padding: 40px 60px;
+    z-index: 10;
+
+    background: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    rgba(0, 0, 0, 0) 100%
+  );
+  }
+
+  nav a {
+  color: white;
+  text-decoration: none;
+  
+  /* Typography & Scale */
+  font-family: 'Inter', sans-serif; /* Modern sans-serif */
+  font-size: 0.8em;              /* Clean, readable size */
+  text-transform: uppercase;      /* Gives it a professional, gallery feel */
+  letter-spacing: 0.15em;         /* Increased spacing for premium look */
+  font-weight: 500;
+
+  /* The Text Shadow: Adds a tiny 'edge' so it doesn't vanish in the stars */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  
+  transition: opacity 0.3s ease;
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 0;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  /* underline bar that slides in on hover */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: #c8935a;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: #c8935a;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* currently active page */
+  .nav-link.active {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .nav-link.active::after {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.4);
+  }
+</style>
