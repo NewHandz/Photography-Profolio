@@ -3,54 +3,73 @@ const { active } = Astro.props;
 ---
 
 <nav>
-  <a href="/" class:list={["nav-link", { active: active === "home" }]}>Home</a>
-  <a href="/about" class:list={["nav-link", { active: active === "about" }]}>About</a>
-  <a href="/contact" class:list={["nav-link", { active: active === "contact" }]}>Contact</a>
+  <div class="nav-name">
+    Chenming Huang
+  </div>
+
+    <a href="/about" class:list={["nav-link", { active: active === "about" }]}>About</a>
+    <a href="/contact" class:list={["nav-link", { active: active === "contact" }]}>Contact</a>
+  
+  <a 
+  href="https://instagram.com/new_hand55"
+      target="_blank"
+      rel="noopener"
+      class="nav-ig"
+      aria-label="Instagram"
+    >
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+      </svg>
+    </a>
 </nav>
 
 <style>
   nav {
-    position: absolute;
+    position: relative;
     top: 0;
-    left: 50px;
+    left: 10px;
     display: flex;
-    gap: 48px;
-    padding: 40px 60px;
-    z-index: 10;
-
-    background: linear-gradient(
-    to bottom, 
-    rgba(0, 0, 0, 0.4) 0%, 
-    rgba(0, 0, 0, 0) 100%
-  );
+    gap: 25px;
+    padding: 10px 15px;
+    z-index: 3;
   }
 
-  nav a {
-  color: white;
-  text-decoration: none;
-  
-  /* Typography & Scale */
-  font-family: 'Inter', sans-serif; /* Modern sans-serif */
-  font-size: 0.8em;              /* Clean, readable size */
-  text-transform: uppercase;      /* Gives it a professional, gallery feel */
-  letter-spacing: 0.15em;         /* Increased spacing for premium look */
-  font-weight: 500;
+  .nav-name
+  {
+    white-space: nowrap;
+    color:#c8935a;
+    font-family: 'Plus Jakarta Sans', Monospace;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    margin-right: auto; 
+    padding-top: 2px;
+  }
 
-  /* The Text Shadow: Adds a tiny 'edge' so it doesn't vanish in the stars */
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-  
-  transition: opacity 0.3s ease;
+  .nav-ig{
+    color: #c48e56;
+    display: flex;
+    align-items: center;
+    padding-top: 2px;
+    padding-right: 15px;
   }
 
   .nav-link {
     color: rgba(255, 255, 255, 0.55);
     text-decoration: none;
-    font-size: 12px;
+    font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     padding: 6px 0;
     position: relative;
     transition: color 0.3s ease;
+    display: flex;
+    gap: 40px;
+    align-items: center;
   }
 
   /* underline bar that slides in on hover */
