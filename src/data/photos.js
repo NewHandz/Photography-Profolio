@@ -5,7 +5,7 @@ export const photos = [
     alt: "Stars",
     location: "Yunnan, China",
     category: "landscapes",
-    hero: true,
+    hero: false,
   },
 
   // ── travel ──
@@ -13,6 +13,20 @@ export const photos = [
     src: "/photos/travel/boguang.png",
     alt: "Water",
     location: "Mayami, US",
+    category: "travel",
+    hero: true,
+  },
+  {
+    src: "/photos/travel/jingdezheng/大厦对比.jpg",
+    alt: "Water",
+    location: "JingDeZhen, China",
+    category: "travel",
+    hero: true,
+  },
+  {
+    src: "/photos/travel/xinjiang/月亮湾.jpg",
+    alt: "Water",
+    location: "XinJiang, China",
     category: "travel",
     hero: true,
   },
