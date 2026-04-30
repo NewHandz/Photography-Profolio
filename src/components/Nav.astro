@@ -3,10 +3,7 @@ const { active } = Astro.props;
 ---
 
 <nav>
-  <div class="nav-name">
-    Chenming Huang
-  </div>
-
+    <a href="/" class="nav-name">Chenming Huang</a>
     <a href="/about" class:list={["nav-link", { active: active === "about" }]}>About</a>
     <a href="/contact" class:list={["nav-link", { active: active === "contact" }]}>Contact</a>
   
@@ -36,6 +33,7 @@ const { active } = Astro.props;
     gap: 25px;
     padding: 20px 30px;
     z-index: 3;
+    text-decoration: none;
   }
 
   .nav-name
@@ -49,6 +47,7 @@ const { active } = Astro.props;
     margin-right: auto; 
     padding-left: 20px;
     padding-top: 0;
+    text-decoration: none;
   }
 
   .nav-ig{
@@ -99,11 +98,15 @@ const { active } = Astro.props;
 
   /* currently active page */
   .nav-link.active {
-    color: rgba(255, 255, 255, 0.9);
+    color: #c8935a;
   }
 
   .nav-link.active::after {
     width: 100%;
     background: rgba(255, 255, 255, 0.4);
+  }
+
+  .nav-name.active{
+    color: #c8935a
   }
 </style>
