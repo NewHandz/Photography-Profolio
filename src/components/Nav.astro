@@ -4,6 +4,8 @@ const { active } = Astro.props;
 
 <nav>
     <a href="/" class="nav-name">Chenming Huang</a>
+
+    <!-- desktop links -->
     <a href="/about" class:list={["nav-link", { active: active === "about" }]}>About</a>
     <a href="/contact" class:list={["nav-link", { active: active === "contact" }]}>Contact</a>
   
@@ -22,6 +24,36 @@ const { active } = Astro.props;
         <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
       </svg>
     </a>
+
+<div>
+  <!-- hamburger button — mobile only -->
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- mobile dropdown -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="/about" class="mobile-link">About</a>
+    <a href="/contact" class="mobile-link">Contact</a>
+    
+    <a
+      href="https://instagram.com/new_hand55"
+      target="_blank"
+      rel="noopener"
+      class="mobile-link"
+      aria-label="Instagram"
+    >
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+      </svg>
+    </a>
+</div>
 </nav>
 
 <style>
@@ -109,4 +141,93 @@ const { active } = Astro.props;
   .nav-name.active{
     color: #c8935a
   }
+
+  /* ── hamburger button ── */
+  .hamburger {
+    display: none;           /* hidden on desktop */
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    padding-right: 30px;
+    padding-top: 10px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: rgba(255, 255, 255, 0.7);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* animate to X when open */
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ── mobile dropdown ── */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1a2535;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+    flex-direction: column;
+    padding: 8px 0;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+  }
+
+  .mobile-link {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .mobile-link:hover {
+    color: #c8935a;
+    background: rgba(200, 147, 90, 0.06);
+  }
+
+  /* ── breakpoint — show hamburger, hide desktop links ── */
+  @media (max-width: 600px) {
+    .nav-ig { display: none; }
+    .nav-link { display: none; }
+    .hamburger { display: flex; }
+  }
 </style>
+
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  hamburger?.addEventListener("click", () => {
+    hamburger.classList.toggle("open");
+    mobileMenu?.classList.toggle("open");
+  });
+
+  // close menu when a link is clicked
+  document.querySelectorAll(".mobile-link").forEach(link => {
+    link.addEventListener("click", () => {
+      hamburger?.classList.remove("open");
+      mobileMenu?.classList.remove("open");
+    });
+  });
+</script>
